@@ -1,0 +1,634 @@
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f6f8;
+        padding: 30px 20px;
+    }
+
+    .calculator-container {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    .calculator {
+        width: 100%;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+        text-align: center;
+        margin: 0 0 8px;
+        color: #222;
+        font-size: 26px;
+    }
+
+    .website-calculator h1 {
+        color: #2563eb;
+    }
+
+    .sharaf-calculator h1 {
+        color: #4f46e5;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #777;
+        margin-bottom: 25px;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .input-group {
+        margin-bottom: 18px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    input {
+        width: 100%;
+        padding: 13px 15px;
+        border: 1px solid #d5d9dd;
+        border-radius: 8px;
+        font-size: 16px;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    input:focus {
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.08);
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 5px;
+        transition: 0.2s;
+    }
+
+    .sharaf-button {
+        background: #4f46e5;
+    }
+
+    .sharaf-button:hover {
+        background: #4338ca;
+    }
+
+    .website-button {
+        background: #2563eb;
+    }
+
+    .website-button:hover {
+        background: #1d4ed8;
+    }
+
+    .results {
+        margin-top: 25px;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+    }
+
+    .profit {
+        padding: 17px;
+        border-radius: 10px;
+        background: #ecfdf5;
+        color: #047857;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        font-size: 19px;
+        font-weight: bold;
+    }
+
+    .loss {
+        background: #fef2f2;
+        color: #dc2626;
+    }
+
+    .formula {
+        margin-top: 20px;
+        padding: 14px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        font-size: 12px;
+        color: #666;
+        line-height: 1.7;
+    }
+
+    .section-badge {
+        text-align: center;
+        margin-bottom: 12px;
+    }
+
+    .section-badge span {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .sharaf-badge {
+        background: #ede9fe;
+        color: #5b21b6;
+    }
+
+    .website-badge {
+        background: #dbeafe;
+        color: #1d4ed8;
+    }
+
+    @media (max-width: 768px) {
+
+        .calculator-container {
+            grid-template-columns: 1fr;
+        }
+
+        body {
+            padding: 20px 12px;
+        }
+
+        .calculator {
+            padding: 25px 20px;
+        }
+    }
+</style>
+
+
+<div class="calculator-container">
+
+
+    <!-- ==========================================
+         SECTION 1: SHARAF-DG
+    =========================================== -->
+
+    <div class="calculator sharaf-calculator">
+
+        <div class="section-badge">
+            <span class="sharaf-badge">
+                MARKETPLACE
+            </span>
+        </div>
+
+        <h1>Sharaf-DG Price Calculator</h1>
+
+        <div class="subtitle">
+            Calculate your actual profit after Sharaf-DG marketplace fees
+        </div>
+
+
+        <!-- Selling Price -->
+
+        <div class="input-group">
+
+            <label for="sellingPrice">
+                Selling Price (AED)
+            </label>
+
+            <input
+                type="number"
+                id="sellingPrice"
+                placeholder="Enter selling price"
+                step="0.01"
+                min="0"
+            >
+
+        </div>
+
+
+        <!-- Purchasing Price -->
+
+        <div class="input-group">
+
+            <label for="purchasePrice">
+                Purchasing Price (AED)
+            </label>
+
+            <input
+                type="number"
+                id="purchasePrice"
+                placeholder="Enter purchasing price"
+                step="0.01"
+                min="0"
+            >
+
+        </div>
+
+
+        <!-- Calculate Button -->
+
+        <button
+            class="sharaf-button"
+            onclick="calculateSharaf()"
+        >
+            Calculate Sharaf-DG Profit
+        </button>
+
+
+        <!-- Result -->
+
+        <div class="results">
+
+            <div
+                class="profit"
+                id="sharafProfitBox"
+            >
+
+                <span>
+                    Profit
+                </span>
+
+                <span id="sharafProfit">
+                    AED 0.00
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Formula -->
+
+        <div class="formula">
+
+            <strong>
+                Sharaf-DG Calculation:
+            </strong>
+
+            <br>
+
+            Marketplace Fee =
+            Selling Price × 7.3%
+
+            <br>
+
+            Net Selling Price =
+            Selling Price − Marketplace Fee − AED 14 (Shipping)
+
+            <br>
+
+            Net Purchase Price =
+            Purchasing Price + 5%
+
+            <br>
+
+            <strong>
+                Profit =
+                Net Selling Price − Net Purchase Price
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         SECTION 2: WEBSITE
+    =========================================== -->
+
+    <div class="calculator website-calculator">
+
+        <div class="section-badge">
+            <span class="website-badge">
+                WEBSITE
+            </span>
+        </div>
+
+        <h1>Website Price Calculator</h1>
+
+        <div class="subtitle">
+            Calculate your actual profit after website fees and shipping
+        </div>
+
+
+        <!-- Website Selling Price -->
+
+        <div class="input-group">
+
+            <label for="websiteSellingPrice">
+                Selling Price (AED)
+            </label>
+
+            <input
+                type="number"
+                id="websiteSellingPrice"
+                placeholder="Enter selling price"
+                step="0.01"
+                min="0"
+            >
+
+        </div>
+
+
+        <!-- Website Purchasing Price -->
+
+        <div class="input-group">
+
+            <label for="websitePurchasePrice">
+                Purchasing Price (AED)
+            </label>
+
+            <input
+                type="number"
+                id="websitePurchasePrice"
+                placeholder="Enter purchasing price"
+                step="0.01"
+                min="0"
+            >
+
+        </div>
+
+
+        <!-- Calculate Button -->
+
+        <button
+            class="website-button"
+            onclick="calculateWebsite()"
+        >
+            Calculate Website Profit
+        </button>
+
+
+        <!-- Result -->
+
+        <div class="results">
+
+            <div
+                class="profit"
+                id="websiteProfitBox"
+            >
+
+                <span>
+                    Profit
+                </span>
+
+                <span id="websiteProfit">
+                    AED 0.00
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Formula -->
+
+        <div class="formula">
+
+            <strong>
+                Website Calculation:
+            </strong>
+
+            <br>
+
+            Card Fee =
+            Selling Price × 3%
+
+            <br>
+
+            Net Selling Price =
+            Selling Price − Card Fee − AED 30 (Shipping)
+
+            <br>
+
+            Net Purchase Price =
+            Purchasing Price + 5%
+
+            <br>
+
+            <strong>
+                Profit =
+                Net Selling Price − Net Purchase Price
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* ==========================================
+   SHARAF-DG CALCULATOR
+========================================== */
+
+function calculateSharaf() {
+
+    const sellingPrice =
+        parseFloat(
+            document.getElementById("sellingPrice").value
+        ) || 0;
+
+
+    const purchasePrice =
+        parseFloat(
+            document.getElementById("purchasePrice").value
+        ) || 0;
+
+
+    /*
+        Sharaf-DG Marketplace Fee
+        7.3%
+    */
+
+    const marketplaceFee =
+        sellingPrice * 0.073;
+
+
+    /*
+        Shipping
+        AED 14
+    */
+
+    const shipping =
+        14;
+
+
+    /*
+        Net Selling Price
+    */
+
+    const netSellingPrice =
+        sellingPrice -
+        marketplaceFee -
+        shipping;
+
+
+    /*
+        Purchasing Price + 5%
+    */
+
+    const netPurchasePrice =
+        purchasePrice * 1.05;
+
+
+    /*
+        Final Profit
+    */
+
+    const profit =
+        netSellingPrice -
+        netPurchasePrice;
+
+
+    /*
+        Display Profit
+    */
+
+    document.getElementById(
+        "sharafProfit"
+    ).innerText =
+        "AED " + profit.toFixed(2);
+
+
+    /*
+        Profit / Loss Color
+    */
+
+    const profitBox =
+        document.getElementById(
+            "sharafProfitBox"
+        );
+
+
+    if (profit < 0) {
+
+        profitBox.classList.add("loss");
+
+    } else {
+
+        profitBox.classList.remove("loss");
+
+    }
+
+}
+
+
+
+/* ==========================================
+   WEBSITE CALCULATOR
+========================================== */
+
+function calculateWebsite() {
+
+    const sellingPrice =
+        parseFloat(
+            document.getElementById(
+                "websiteSellingPrice"
+            ).value
+        ) || 0;
+
+
+    const purchasePrice =
+        parseFloat(
+            document.getElementById(
+                "websitePurchasePrice"
+            ).value
+        ) || 0;
+
+
+    /*
+        Website Fee
+        3%
+    */
+
+    const websiteFee =
+        sellingPrice * 0.03;
+
+
+    /*
+        Website Shipping
+        AED 30
+    */
+
+    const shipping =
+        30;
+
+
+    /*
+        Net Selling Price
+    */
+
+    const netSellingPrice =
+        sellingPrice -
+        websiteFee -
+        shipping;
+
+
+    /*
+        Purchasing Price + 5%
+    */
+
+    const netPurchasePrice =
+        purchasePrice * 1.05;
+
+
+    /*
+        Final Profit
+    */
+
+    const profit =
+        netSellingPrice -
+        netPurchasePrice;
+
+
+    /*
+        Display Profit
+    */
+
+    document.getElementById(
+        "websiteProfit"
+    ).innerText =
+        "AED " + profit.toFixed(2);
+
+
+    /*
+        Profit / Loss Color
+    */
+
+    const profitBox =
+        document.getElementById(
+            "websiteProfitBox"
+        );
+
+
+    if (profit < 0) {
+
+        profitBox.classList.add("loss");
+
+    } else {
+
+        profitBox.classList.remove("loss");
+
+    }
+
+}
+
+</script>
